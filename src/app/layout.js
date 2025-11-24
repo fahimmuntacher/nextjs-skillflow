@@ -30,11 +30,11 @@ export default function RootLayout({ children }) {
           {/* <Banner></Banner> */}
 
           {/* main section */}
-          <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8 flex-1">
+          <main className="pb-15 px-4 sm:px-6 lg:px-8 flex-1">
             {children}
           </main>
         </div>
-        <footer>
+        <footer className="px-4 sm:px-6 lg:px-8">
           <Footer></Footer>
         </footer>
       </body>
