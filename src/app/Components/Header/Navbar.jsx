@@ -1,22 +1,31 @@
 import React from "react";
 import Logo from "../Logo/Logo";
 import { FaShoppingBag } from "react-icons/fa";
+import Link from "next/link";
 
 const Navbar = () => {
   const links = (
     <>
-      <li className="text-lg font-medium">
-        <span>Home</span>
-      </li>
-      <li className="text-lg font-medium">
-        <span>Courses</span>
-      </li>
-      <li className="text-lg font-medium">
-        <span>About</span>
-      </li>
-      <li className="text-lg font-medium">
-        <span>Contact</span>
-      </li>
+      <Link href="/">
+        <li className="text-lg font-medium">
+          <span>Home</span>
+        </li>
+      </Link>
+      <Link href="/courses">
+        <li className="text-lg font-medium">
+          <span>Courses</span>
+        </li>
+      </Link>
+      <Link href="/about">
+        <li className="text-lg font-medium">
+          <span>About</span>
+        </li>
+      </Link>
+      <Link href="/contact">
+        <li className="text-lg font-medium">
+          <span>Contact</span>
+        </li>
+      </Link>
     </>
   );
 
@@ -24,7 +33,7 @@ const Navbar = () => {
     // Outer container: centers content and applies responsive horizontal padding
     <div className="px-4 sm:px-6 lg:px-8 mx-auto py-3.5">
       {/* Navbar wrapper */}
-      <div className="navbar bg-base-100 shadow-sm rounded-2xl h-16 py-">
+      <div className="navbar shadow-sm rounded-2xl h-16 bg-white px-4 py-8">
         {/* Left side: logo + mobile dropdown */}
         <div className="navbar-start h-full flex items-center">
           {/* Mobile dropdown: visible only on small screens (lg:hidden) */}
@@ -98,8 +107,17 @@ const Navbar = () => {
           <div className="border-r-3 pr-3.5 border-gray-400">
             <FaShoppingBag className="text-xl text-gray-700" />
           </div>
-          <button className="btn border-2 border-gray-400 rounded-lg font-bold py-4 bg-white text-lg px-5 hover:text-white hover:bg-blue-700">Login</button>
-          <button className="btn border-2 border-blue-400 rounded-lg font-bold py-4 bg-white text-lg px-5 hover:text-white hover:bg-blue-700">Try for free</button>
+          <Link href="/login">
+            <button className="btn border-2 border-gray-400 rounded-lg font-bold py-4 bg-white text-lg px-5 hover:text-white hover:bg-blue-700">
+              {" "}
+              Login
+            </button>
+          </Link>
+          <Link href="/register">
+            <button className="btn border-2 border-blue-400 rounded-lg font-bold py-4 bg-white text-lg px-5 hover:text-white hover:bg-blue-700">
+              Register Now
+            </button>
+          </Link>
         </div>
       </div>
     </div>
