@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Featured = () => {
   const [courses, setCourses] = useState([]);
   const [activeType, setActiveType] = useState("all");
-
+  const sortedCourse = courses.slice(0, 6);
   // Fetch Data Function
   const fetchCourses = async (type) => {
     const url =
@@ -65,7 +66,7 @@ const Featured = () => {
 
       {/* Courses Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-        {courses.map((course, index) => (
+        {sortedCourse.map((course, index) => (
           <motion.div
             key={course._id}
             variants={cardVariants}
@@ -106,13 +107,17 @@ const Featured = () => {
 
               {/* Buttons */}
               <div className="mt-5 flex flex-col sm:flex-row gap-3">
-                <button className="w-full sm:flex-1 px-4 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition">
-                  Explore Now
-                </button>
+                <Link href={`/courses/${course._id}`} className="flex-1 cursor-pointer">
+                  <button className="w-full sm:flex-1 px-4 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition">
+                    Explore Now
+                  </button>
+                </Link>
 
-                <button className="w-full sm:flex-1 px-4 py-2 bg-gray-900 text-white rounded-xl font-semibold hover:bg-black transition">
-                  Pay Now
-                </button>
+                <Link href="/" className="flex-1 cursor-pointer">
+                  <button className="w-full sm:flex-1 px-4 py-2 bg-gray-900 text-white rounded-xl font-semibold hover:bg-black transition">
+                    Pay Now
+                  </button>
+                </Link>
               </div>
             </div>
           </motion.div>
