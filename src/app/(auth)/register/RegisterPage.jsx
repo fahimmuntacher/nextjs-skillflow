@@ -9,13 +9,14 @@ import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useAuth } from "@/AuthContext/AuthContext";
 import { toast } from "react-toastify";
+import { useAxiosSecure } from "@/app/Hooks/useAxiosSecure";
 
 const RegisterPage = () => {
   const { registerUser, updateUserProfile } = useAuth();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-
+    const axiosInstance = useAxiosSecure()
   const {
     register,
     handleSubmit,
@@ -30,6 +31,14 @@ const RegisterPage = () => {
       const userCredential = await registerUser(data.email, data.password);
 
       await updateUserProfile({ displayName: data.userName });
+      const userInfo = {
+        name : data.userName,
+        email: data.email,
+        role: "user"
+      }
+      axiosInstance.post("/users", userInfo).then(res =>{
+        console.log(res);
+      })
       toast.success("Registration successful!");
       router.push("/");
     } catch (error) {

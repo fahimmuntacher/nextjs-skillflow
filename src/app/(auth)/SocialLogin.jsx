@@ -5,15 +5,24 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 import { toast } from "react-toastify";
+import { useAxiosSecure } from "../Hooks/useAxiosSecure";
 
 const SocialLogin = () => {
   const router = useRouter();
+  const axiosInstance = useAxiosSecure();
   const { signInWithGoogle } = useAuth();
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = () => {
     try {
-      await signInWithGoogle();
-      router.push("/");
-      toast.success("Logged in with Google!");
+      signInWithGoogle().then((res) => {
+        const userInfo = {
+          email: res?.user?.email,
+          name: res?.user?.displayName,
+          role: "user",
+        };
+        axiosInstance.post("/users", userInfo);
+        router.push("/");
+        toast.success("Logged in with Google!");
+      });
     } catch (error) {
       console.error(error);
       alert("Failed to login");

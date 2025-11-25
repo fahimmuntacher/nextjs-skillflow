@@ -1,14 +1,44 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+
 import SocialLogin from "../SocialLogin";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { toast } from "react-toastify";
+import { useAuth } from "@/AuthContext/AuthContext";
 
 const LoginPage = () => {
+  const { signInUser } = useAuth();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleLogin = async (data) => {
+    try {
+      setLoading(true);
+      await signInUser(data.email, data.password);
+      toast.success("Login successful!");
+      router.push("/"); // redirect to home
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-100 to-purple-100 px-4">
-      {/* Floating Animation Wrapper */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -31,6 +61,7 @@ const LoginPage = () => {
 
         {/* Form */}
         <motion.form
+          onSubmit={handleSubmit(handleLogin)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -42,24 +73,46 @@ const LoginPage = () => {
               Email Address
             </label>
             <input
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Invalid email address",
+                },
+              })}
               type="email"
               placeholder="Enter your email"
               className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none"
-              required
             />
+            {errors.email && (
+              <span className="text-sm text-red-500 font-bold">
+                {errors.email.message}
+              </span>
+            )}
           </div>
 
           {/* Password */}
-          <div>
+          <div className="relative">
             <label className="block mb-2 text-gray-700 font-medium">
               Password
             </label>
             <input
-              type="password"
+              {...register("password", { required: "Password is required" })}
+              type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none"
-              required
+              className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none pr-12"
             />
+            <div
+              className="absolute right-3 top-[38px] cursor-pointer text-gray-500"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+            </div>
+            {errors.password && (
+              <span className="text-sm text-red-500 font-bold">
+                {errors.password.message}
+              </span>
+            )}
           </div>
 
           {/* Forgot Password */}
@@ -79,7 +132,7 @@ const LoginPage = () => {
             type="submit"
             className="w-full py-3 bg-blue-600 text-white rounded-xl font-semibold shadow-md hover:bg-blue-700 transition"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </motion.button>
         </motion.form>
 
@@ -91,7 +144,7 @@ const LoginPage = () => {
         </div>
 
         {/* Google Login */}
-       <SocialLogin></SocialLogin>
+        <SocialLogin />
 
         {/* Register Link */}
         <p className="text-center text-gray-700 mt-6">
