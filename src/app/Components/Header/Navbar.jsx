@@ -91,7 +91,7 @@ const Navbar = () => {
           </div>
 
           {/* Cart */}
-          <div className="relative">
+          <div className="hidden relative sm:block ">
             <FaShoppingBag className="text-2xl text-gray-700 cursor-pointer hover:text-blue-600 transition" />
             <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full px-2 py-0.5">
               2
@@ -100,7 +100,7 @@ const Navbar = () => {
 
           {/* Login */}
           <Link href="/login">
-            <button className="px-5 py-2 border border-gray-400 rounded-xl font-semibold hover:bg-gray-900 hover:text-white transition">
+            <button className="hidden sm:block px-5 py-2 border border-gray-400 rounded-xl font-semibold hover:bg-gray-900 hover:text-white transition">
               Login
             </button>
           </Link>
