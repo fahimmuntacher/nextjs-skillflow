@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import SocialLogin from "../SocialLogin";
 
 const LoginPage = () => {
   return (
@@ -90,17 +91,7 @@ const LoginPage = () => {
         </div>
 
         {/* Google Login */}
-        <motion.button
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          className="mt-6 w-full py-3 bg-white border border-gray-300 rounded-xl font-medium shadow-sm hover:shadow-md flex items-center justify-center gap-2"
-        >
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            className="w-5 h-5"
-          />
-          Continue with Google
-        </motion.button>
+       <SocialLogin></SocialLogin>
 
         {/* Register Link */}
         <p className="text-center text-gray-700 mt-6">

@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./Components/Header/Navbar";
 import Footer from "./Components/Footer/Footer";
 import { AuthProvider } from "@/AuthContext/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,22 +23,23 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-screen w-full mx-auto flex flex-col justify-between">
-        <div className="flex flex-col flex-1">
-          <div className="sticky top-0 z-40">
-            <Navbar />
-          </div>
-          {/* main section */}
-          <main className="pb-15 px-4 sm:px-6 lg:px-8 flex-1">
-            <AuthProvider>
+      <AuthProvider>
+        <body className="min-h-screen w-full mx-auto flex flex-col justify-between">
+          <div className="flex flex-col flex-1">
+            <div className="sticky top-0 z-40">
+              <Navbar />
+            </div>
+            {/* main section */}
+            <main className="pb-15 px-4 sm:px-6 lg:px-8 flex-1">
+              <ToastContainer position="bottom-right"></ToastContainer>
               {children}
-            </AuthProvider>
-          </main>
-        </div>
-        <footer className="px-4 sm:px-6 lg:px-8">
-          <Footer></Footer>
-        </footer>
-      </body>
+            </main>
+          </div>
+          <footer className="px-4 sm:px-6 lg:px-8">
+            <Footer></Footer>
+          </footer>
+        </body>
+      </AuthProvider>
     </html>
   );
 }

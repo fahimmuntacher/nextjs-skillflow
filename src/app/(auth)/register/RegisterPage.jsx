@@ -1,13 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import SocialLogin from "../SocialLogin";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useAuth } from "@/AuthContext/AuthContext";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
+  const { registerUser, updateUserProfile } = useAuth();
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const password = watch("password", "");
+
+  const handleRegistration = async (data) => {
+    try {
+      const userCredential = await registerUser(data.email, data.password);
+
+      await updateUserProfile({ displayName: data.userName });
+      toast.success("Registration successful!");
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      alert(error.message);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-100 via-blue-100 to-blue-50 px-4">
+    <div className="min-h-screen flex justify-center items-center bg-linear-to-br from-purple-100 via-blue-100 to-blue-50 px-4">
       {/* Animated Card */}
       <motion.div
         initial={{ opacity: 0, y: 25 }}
@@ -31,6 +64,7 @@ const RegisterPage = () => {
 
         {/* Register Form */}
         <motion.form
+          onSubmit={handleSubmit(handleRegistration)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.35 }}
@@ -42,11 +76,16 @@ const RegisterPage = () => {
               Full Name
             </label>
             <input
+              {...register("userName", { required: "Full name is required" })}
               type="text"
               placeholder="Enter your full name"
               className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none"
-              required
             />
+            {errors.userName && (
+              <span className="text-sm text-red-500 font-bold">
+                {errors.userName.message}
+              </span>
+            )}
           </div>
 
           {/* Email */}
@@ -55,37 +94,76 @@ const RegisterPage = () => {
               Email Address
             </label>
             <input
+              {...register("email", { required: "Email is required" })}
               type="email"
               placeholder="Enter your email"
               className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none"
-              required
             />
+            {errors.email && (
+              <span className="text-sm text-red-500 font-bold">
+                {errors.email.message}
+              </span>
+            )}
           </div>
 
           {/* Password */}
-          <div>
+          <div className="relative">
             <label className="block mb-2 text-gray-700 font-medium">
               Password
             </label>
             <input
-              type="password"
+              {...register("password", {
+                required: "Password is required",
+                pattern: {
+                  value:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  message:
+                    "Password must be at least 8 characters, include uppercase, lowercase, number and special character",
+                },
+              })}
+              type={showPassword ? "text" : "password"}
               placeholder="Create a password"
-              className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none"
-              required
+              className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none pr-12"
             />
+            <div
+              className="absolute right-3 top-[38px] cursor-pointer text-gray-500"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+            </div>
+            {errors.password && (
+              <span className="text-sm text-red-500 font-bold">
+                {errors.password.message}
+              </span>
+            )}
           </div>
 
           {/* Confirm Password */}
-          <div>
+          <div className="relative">
             <label className="block mb-2 text-gray-700 font-medium">
               Confirm Password
             </label>
             <input
-              type="password"
+              {...register("confirmPassword", {
+                required: "Confirm password is required",
+                validate: (value) =>
+                  value === password || "Passwords do not match",
+              })}
+              type={showConfirm ? "text" : "password"}
               placeholder="Re-enter password"
-              className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none"
-              required
+              className="input input-bordered w-full rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:outline-none pr-12"
             />
+            <div
+              className="absolute right-3 top-[38px] cursor-pointer text-gray-500"
+              onClick={() => setShowConfirm(!showConfirm)}
+            >
+              {showConfirm ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+            </div>
+            {errors.confirmPassword && (
+              <span className="text-sm text-red-500 font-bold">
+                {errors.confirmPassword.message}
+              </span>
+            )}
           </div>
 
           {/* Register Button */}
@@ -94,8 +172,9 @@ const RegisterPage = () => {
             whileTap={{ scale: 0.97 }}
             type="submit"
             className="w-full py-3 bg-blue-600 text-white rounded-xl font-semibold shadow-md hover:bg-blue-700 transition"
+            
           >
-            Create Account
+           Create Account
           </motion.button>
         </motion.form>
 
@@ -107,7 +186,7 @@ const RegisterPage = () => {
         </div>
 
         {/* Google Signup Button */}
-       <SocialLogin></SocialLogin>
+        <SocialLogin />
 
         {/* Login Link */}
         <p className="text-center text-gray-700 mt-6">
