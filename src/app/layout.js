@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Components/Header/Navbar";
 import Footer from "./Components/Footer/Footer";
-import Banner from "./Components/Header/Banner";
+import { AuthProvider } from "@/AuthContext/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,11 +27,11 @@ export default function RootLayout({ children }) {
           <div className="sticky top-0 z-40">
             <Navbar />
           </div>
-          {/* <Banner></Banner> */}
-
           {/* main section */}
           <main className="pb-15 px-4 sm:px-6 lg:px-8 flex-1">
-            {children}
+            <AuthProvider>
+              {children}
+            </AuthProvider>
           </main>
         </div>
         <footer className="px-4 sm:px-6 lg:px-8">
