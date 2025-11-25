@@ -14,25 +14,39 @@ import { IoCallOutline } from "react-icons/io5";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 
-
 // ---------------------------
 // TYPEWRITER HOOK
 // ---------------------------
-const useTypewriter = (text, speed = 70) => {
+const useTypewriter = (text, speed = 70, pause = 1200) => {
   const [displayed, setDisplayed] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      setDisplayed(text.slice(0, i));
-      i++;
-      if (i > text.length) clearInterval(interval);
+    let i = displayed.length;
+
+    const run = setTimeout(() => {
+      if (!isDeleting) {
+        // Typing
+        setDisplayed(text.slice(0, i + 1));
+
+        if (i + 1 === text.length) {
+          setTimeout(() => setIsDeleting(true), pause); // Pause before deleting
+        }
+      } else {
+        // Deleting
+        setDisplayed(text.slice(0, i - 1));
+
+        if (i - 1 === 0) {
+          setIsDeleting(false); // Start typing again
+        }
+      }
     }, speed);
-  }, [text]);
+
+    return () => clearTimeout(run);
+  }, [displayed, isDeleting, text, speed, pause]);
 
   return displayed;
 };
-
 
 // ---------------------------
 // FLOATING ICON
@@ -57,7 +71,6 @@ const FloatingIcon = ({ Icon, size, top, left, delay }) => (
     <Icon className={`${size} drop-shadow-lg`} />
   </motion.div>
 );
-
 
 // ---------------------------
 // PARTICLE BACKGROUND
@@ -93,12 +106,14 @@ const ParticleBG = () => {
   );
 };
 
-
 // ---------------------------
 // ANIMATED SVG SHAPES
 // ---------------------------
 const AnimatedShapes = () => (
-  <svg className="absolute top-10 right-10 w-40 opacity-20" viewBox="0 0 200 200">
+  <svg
+    className="absolute top-10 right-10 w-40 opacity-20"
+    viewBox="0 0 200 200"
+  >
     <motion.path
       fill="#5b8bf7"
       d="M44.8,-77.6C58.4,-69.2,68.8,-55.6,75.3,-41.2C81.9,-26.7,84.6,-11.3,84.5,3.3C84.3,18,81.3,31.9,73.1,43.3C64.9,54.7,51.6,63.7,37.2,71.2C22.9,78.7,7.7,84.8,-6.4,86.1C-20.4,87.5,-33.3,84.1,-46.3,77.5C-59.3,70.8,-72.5,61,-81.7,48.3C-91,35.6,-96.3,20.1,-97.5,4.3C-98.6,-11.6,-95.6,-27.6,-89.4,-42.2C-83.2,-56.7,-73.8,-69.8,-61.2,-78.5C-48.5,-87.1,-32.7,-91.2,-17.1,-89.4C-1.5,-87.7,14.9,-80.1,29.1,-72.4C43.3,-64.8,55.1,-57,44.8,-77.6Z"
@@ -115,38 +130,75 @@ const AnimatedShapes = () => (
   </svg>
 );
 
-
 // ---------------------------
 // MAIN BANNER COMPONENT
 // ---------------------------
 const Banner = () => {
-  const title = useTypewriter("Unlock Your Potential With World-Class Learning");
-  
+  const title = useTypewriter(
+    "Unlock Your Potential With World-Class Learning"
+  );
+
   // PARALLAX IMAGE
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref });
   const yParallax = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
-
   return (
-    <div ref={ref} className="relative overflow-hidden bg-linear-to-r from-[#f4f4f6] via-[#f6ebff] to-blue-50 min-h-screen flex flex-col">
-
+    <div
+      ref={ref}
+      className="relative overflow-hidden bg-linear-to-r from-[#f4f4f6] via-[#f6ebff] to-blue-50 min-h-screen flex flex-col rounded-2xl"
+    >
       <ParticleBG />
       <AnimatedShapes />
 
       {/* Background Learning Icons */}
       <div className="absolute inset-0 pointer-events-none">
-        <FloatingIcon Icon={FaBookOpen} size="text-6xl" top="15%" left="8%" delay={0} />
-        <FloatingIcon Icon={FaLaptopCode} size="text-7xl" top="65%" left="5%" delay={1} />
-        <FloatingIcon Icon={FaGraduationCap} size="text-6xl" top="20%" left="75%" delay={1.5} />
-        <FloatingIcon Icon={FaPenFancy} size="text-5xl" top="60%" left="85%" delay={2} />
-        <FloatingIcon Icon={FaLightbulb} size="text-6xl" top="35%" left="50%" delay={0.7} />
-        <FloatingIcon Icon={FaChalkboardTeacher} size="text-7xl" top="5%" left="45%" delay={1.8} />
+        <FloatingIcon
+          Icon={FaBookOpen}
+          size="text-6xl"
+          top="15%"
+          left="8%"
+          delay={0}
+        />
+        <FloatingIcon
+          Icon={FaLaptopCode}
+          size="text-7xl"
+          top="65%"
+          left="5%"
+          delay={1}
+        />
+        <FloatingIcon
+          Icon={FaGraduationCap}
+          size="text-6xl"
+          top="20%"
+          left="75%"
+          delay={1.5}
+        />
+        <FloatingIcon
+          Icon={FaPenFancy}
+          size="text-5xl"
+          top="60%"
+          left="85%"
+          delay={2}
+        />
+        <FloatingIcon
+          Icon={FaLightbulb}
+          size="text-6xl"
+          top="35%"
+          left="50%"
+          delay={0.7}
+        />
+        <FloatingIcon
+          Icon={FaChalkboardTeacher}
+          size="text-7xl"
+          top="5%"
+          left="45%"
+          delay={1.8}
+        />
       </div>
 
       {/* HERO CONTENT */}
       <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center mx-auto gap-10 p-10 w-11/12 relative z-10">
-
         {/* LEFT TEXT */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
@@ -160,8 +212,9 @@ const Banner = () => {
           </h2>
 
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-            Learn smarter and faster. Explore curated courses, track your progress, 
-            and gain real-world skills—whether you're starting or leveling up.
+            Learn smarter and faster. Explore curated courses, track your
+            progress, and gain real-world skills—whether you're starting or
+            leveling up.
           </p>
 
           {/* CTA + Phone */}
@@ -184,8 +237,12 @@ const Banner = () => {
             >
               <IoCallOutline className="text-5xl text-blue-600" />
               <div>
-                <h2 className="text-lg font-semibold text-blue-500">Have any queries?</h2>
-                <p className="text-xl font-bold hover:text-blue-600 cursor-pointer">+8801234567</p>
+                <h2 className="text-lg font-semibold text-blue-500">
+                  Have any queries?
+                </h2>
+                <p className="text-xl font-bold hover:text-blue-600 cursor-pointer">
+                  +8801234567
+                </p>
               </div>
             </motion.div>
           </div>
