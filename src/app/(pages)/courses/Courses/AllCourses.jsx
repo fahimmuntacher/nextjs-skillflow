@@ -17,8 +17,8 @@ const AllCourses = () => {
         setLoading(true)
       const url =
         category === "all"
-          ? "https://my-app-server-gamma.vercel.app/courses"
-          : `https://my-app-server-gamma.vercel.app/courses?type=${category}`;
+          ? `${process.env.NEXT_PUBLIC_API_DOMAIN}/courses`
+          : `${process.env.NEXT_PUBLIC_API_DOMAIN}/courses?type=${category}`;
       const res = await fetch(url);
       const data = await res.json();
       setCourses(data);

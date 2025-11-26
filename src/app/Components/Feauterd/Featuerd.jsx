@@ -12,8 +12,8 @@ const Featured = () => {
   const fetchCourses = async (type) => {
     const url =
       type === "all"
-        ? "http://localhost:5000/courses"
-        : `http://localhost:5000/courses?type=${type}`;
+        ? `${process.env.NEXT_PUBLIC_API_DOMAIN}/courses`
+        : `${process.env.NEXT_PUBLIC_API_DOMAIN}/courses?type=${type}`;
 
     const res = await fetch(url);
     const data = await res.json();

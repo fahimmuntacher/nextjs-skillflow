@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const axiosSecure = axios.create({
-  baseURL: "https://my-app-server-gamma.vercel.app",
+  baseURL: `${process.env.NEXT_PUBLIC_API_DOMAIN}`,
 });
 
 const useAxiosSecure = () => {
