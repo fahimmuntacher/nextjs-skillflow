@@ -3,9 +3,10 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { useAxiosSecure } from "@/app/Hooks/useAxiosSecure";
+
 import { toast } from "react-toastify";
 import { useAuth } from "@/AuthContext/AuthContext";
+import useAxiosSecure from "@/app/Hooks/useAxiosSecure";
 
 const AddCourse = () => {
   const axiosSecure = useAxiosSecure();

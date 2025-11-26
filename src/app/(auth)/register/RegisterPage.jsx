@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useAuth } from "@/AuthContext/AuthContext";
 import { toast } from "react-toastify";
-import { useAxiosSecure } from "@/app/Hooks/useAxiosSecure";
+import useAxiosSecure from "@/app/Hooks/useAxiosSecure";
 
 const RegisterPage = () => {
   const { registerUser, updateUserProfile } = useAuth();

@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useAxiosSecure } from "@/app/Hooks/useAxiosSecure";
 import { FaArrowLeft } from "react-icons/fa";
 import Loading from "@/app/Components/Loading/Loading";
 import NotFound from "@/app/Components/notfound/NotFound";
+import useAxiosSecure from "@/app/Hooks/useAxiosSecure";
 
 const CourseDetails = ({ id }) => {
   const axiosSecure = useAxiosSecure();

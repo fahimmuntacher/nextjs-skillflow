@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 import { toast } from "react-toastify";
-import { useAxiosSecure } from "../Hooks/useAxiosSecure";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+
 
 const SocialLogin = () => {
   const router = useRouter();

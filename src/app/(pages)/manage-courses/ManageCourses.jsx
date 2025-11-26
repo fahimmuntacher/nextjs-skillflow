@@ -9,8 +9,9 @@ import { toast } from "react-toastify";
 import { useAuth } from "@/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 import Loading from "@/app/Components/Loading/Loading";
-import { useAxiosSecure } from "@/app/Hooks/useAxiosSecure";
+
 import Link from "next/link";
+import useAxiosSecure from "@/app/Hooks/useAxiosSecure";
 
 const ManageCourses = () => {
   const { user } = useAuth();
