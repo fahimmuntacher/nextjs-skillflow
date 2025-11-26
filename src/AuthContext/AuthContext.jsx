@@ -8,10 +8,10 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  updateCurrentUser,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "@/app/firebase/firebase.config";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
@@ -36,6 +36,7 @@ export function AuthProvider({ children }) {
   };
 
   const signOutUser = () => {
+    Cookies.remove("authToken"); //remove cookie
     setLoading(true);
     return signOut(auth);
   };
@@ -44,10 +45,18 @@ export function AuthProvider({ children }) {
     return updateProfile(auth.currentUser, profile);
   };
 
+
   useEffect(() => {
-    setLoading(true);
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+
+      if (currentUser) {
+        const token = await currentUser.getIdToken();
+        Cookies.set("authToken", token, { expires: 7 });
+      } else {
+        Cookies.remove("authToken");
+      }
+
       setLoading(false);
     });
 
@@ -60,7 +69,6 @@ export function AuthProvider({ children }) {
     signInUser,
     signOutUser,
     user,
-
     loading,
     updateUserProfile,
   };

@@ -1,19 +1,15 @@
 import { NextResponse } from "next/server";
-import { useAuth } from "./AuthContext/AuthContext";
 
-// This function can be marked `async` if using `await` inside
 export function proxy(request) {
-  const user = true
-  
-  if (!user) {
+  const token = request.cookies.get("authToken")?.value;
+
+  if (!token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  return NextResponse.next();
 }
 
-// Alternatively, you can use a default export:
-// export default function proxy(request) { ... }
-
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: "/about/:path*",
+  matcher: ["/add-course/:path*", "/manage-courses/:path*"],
 };

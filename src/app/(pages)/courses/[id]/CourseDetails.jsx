@@ -5,20 +5,40 @@ import { motion } from "framer-motion";
 import { useAxiosSecure } from "@/app/Hooks/useAxiosSecure";
 import { FaArrowLeft } from "react-icons/fa";
 import Loading from "@/app/Components/Loading/Loading";
+import NotFound from "@/app/Components/notfound/NotFound";
 
 const CourseDetails = ({ id }) => {
   const axiosSecure = useAxiosSecure();
   const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(false)
 
   useEffect(() => {
-    axiosSecure.get(`/courses/${id}`).then((res) => {
-      setCourse(res.data);
-    });
+    setLoading(true);
+
+    axiosSecure
+      .get(`/courses/${id}`)
+      .then((res) => {
+        setCourse(res.data);
+      })
+      .catch((err) => {
+        setErr(true)
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id, axiosSecure]);
 
-  if (!course) {
+
+
+  if (loading) {
     return <Loading></Loading>;
   }
+
+  if(err){
+    return <NotFound></NotFound>
+  }
+
 
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 to-purple-50 px-4 py-10">

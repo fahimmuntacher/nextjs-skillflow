@@ -42,7 +42,7 @@ const ManageCourses = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await axiosSecure.delete(`/courses/${id}`); // Fixed route
+          const res = await axiosSecure.delete(`/courses/${id}`);
 
           if (res.data.deletedCount > 0) {
             Swal.fire({
@@ -72,6 +72,7 @@ const ManageCourses = () => {
   if (loading) {
     return <Loading></Loading>;
   }
+
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 to-purple-50 px-6 py-10">
       <div className="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
@@ -116,12 +117,13 @@ const ManageCourses = () => {
                   <td className="p-4 flex items-center justify-center gap-4">
                     {/* Edit Button */}
                     <Link href={`/courses/${course._id}`}>
-                    <button
-                      onClick={() => console.log("Edit", course._id)}
-                      className="p-2 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-xl"
-                    >
-                      <FaEye></FaEye>
-                    </button></Link>
+                      <button
+                        onClick={() => console.log("Edit", course._id)}
+                        className="p-2 bg-blue-100 hover:bg-blue-200 text-blue-600 rounded-xl"
+                      >
+                        <FaEye></FaEye>
+                      </button>
+                    </Link>
 
                     {/* Delete Button */}
                     <button
