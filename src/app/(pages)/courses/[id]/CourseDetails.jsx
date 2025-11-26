@@ -67,9 +67,6 @@ const CourseDetails = ({ id }) => {
             <span className="px-4 py-2 bg-purple-100 text-purple-700 rounded-xl font-medium">
               Level: {course.level}
             </span>
-            <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium">
-              Added: {new Date(course.date).toLocaleDateString()}
-            </span>
           </div>
 
           {/* Description */}
