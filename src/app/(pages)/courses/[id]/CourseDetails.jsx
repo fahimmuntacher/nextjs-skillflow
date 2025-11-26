@@ -42,6 +42,7 @@ const CourseDetails = ({ id }) => {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 to-purple-50 px-4 py-10">
+      <title>{course.name} | SkillFlow</title>
       <div className="max-w-5xl mx-auto">
         {/* Back Button */}
         <motion.button

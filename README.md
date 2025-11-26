@@ -30,7 +30,7 @@ SkillFlow is a modern, responsive, and interactive online learning platform wher
 
 ## 🌐 Live Lin
 
-[Click here to view SkillFlow](https://skillflow.netlify.app)
+[Click here to view SkillFlow](https://skillflow-next.netlify.app/)
 
 ## 🔗  GitHub Repo Link 
 - Backend: [SkillFlow Backend](https://github.com/fahimmuntacher/skillflow-server.git)

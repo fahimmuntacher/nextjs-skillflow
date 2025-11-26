@@ -6,6 +6,7 @@ import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 const Contact = () => {
   return (
     <div className="min-h-screen bg-linear-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4 py-16">
+        <title>Contact Us | SKillFlow</title>
          {/* Animated Heading */}
       <motion.h1
         className="text-4xl md:text-5xl font-bold text-indigo-800 mb-6 text-center"

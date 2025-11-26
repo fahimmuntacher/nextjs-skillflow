@@ -6,6 +6,7 @@ import { FaLaptopCode, FaPalette, FaBriefcase } from "react-icons/fa";
 const About = () => {
   return (
     <div className="min-h-screen bg-linear-to-b from-indigo-50 to-white flex flex-col items-center justify-center px-4 py-16">
+      <title>About Us | SkillFlow</title>
       {/* Animated Heading */}
       <motion.h1
         className="text-4xl md:text-5xl font-bold text-indigo-800 mb-6 text-center"

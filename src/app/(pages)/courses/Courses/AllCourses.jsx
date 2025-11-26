@@ -48,6 +48,7 @@ const AllCourses = () => {
 
   return (
     <div className="px-6 sm:px-10 lg:px-20 py-12">
+      <title>All Courses | Skill Flow</title>
       {/* Page Title */}
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold text-gray-900">All Courses</h1>
