@@ -1,9 +1,11 @@
+"use client";
 import React from 'react';
+import Contact from './Contact';
 
 const page = () => {
     return (
         <div>
-            this is contact
+           <Contact></Contact>
         </div>
     );
 };
