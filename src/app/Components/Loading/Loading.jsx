@@ -19,7 +19,7 @@ const Loading = () => {
     <div className="flex flex-col justify-center items-center h-screen bg-linear-to-r from-blue-100 via-purple-100 to-pink-100">
       {/* Logo or Title */}
       <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-10 animate-pulse">
-        Loading Courses...
+        Loading...
       </h1>
 
       {/* Animated Dots */}

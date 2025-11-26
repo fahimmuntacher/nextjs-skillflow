@@ -1,9 +1,10 @@
 import React from 'react';
+import AddCourse from './AddCourse';
 
 const page = () => {
     return (
         <div>
-            Add course
+            <AddCourse></AddCourse>
         </div>
     );
 };
