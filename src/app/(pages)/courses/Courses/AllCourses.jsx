@@ -17,8 +17,8 @@ const AllCourses = () => {
         setLoading(true)
       const url =
         category === "all"
-          ? "http://localhost:5000/courses"
-          : `http://localhost:5000/courses?type=${category}`;
+          ? "https://my-app-server-gamma.vercel.app/courses"
+          : `https://my-app-server-gamma.vercel.app/courses?type=${category}`;
       const res = await fetch(url);
       const data = await res.json();
       setCourses(data);

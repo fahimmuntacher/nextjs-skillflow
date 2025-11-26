@@ -12,7 +12,7 @@ import Logo from "../Logo/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-sky-700 text-white px-6 sm:px-10 lg:px-20 py-12 rounded-2xl">
+    <footer className="bg-sky-700 text-white px-6 sm:px-10 lg:px-20 py-12 rounded-t-2xl">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Brand */}
         <div className="space-y-4">
