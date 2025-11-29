@@ -26,7 +26,7 @@ SkillFlow is a modern, responsive, and interactive online learning platform wher
 - **Backend:** Node.js, Express.js, MongoDB
 - **Animations:** Framer Motion
 - **Icons:** React Icons
-- **Deployment:** Vercel (Frontend), Vercel (Backend)
+- **Deployment:** Netlify (Frontend), Vercel (Backend)
 
 ## 🌐 Live Lin
 
